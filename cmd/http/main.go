@@ -1,16 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	authHandler "github.com/leonardoong/simple-ecommerce/internal/handler"
+	"github.com/leonardoong/simple-ecommerce/internal/common/db"
 )
 
 func main() {
 
-	router := gin.Default()
+	ecommerceDB := db.ConnectDB()
 
-	router.GET("/login", authHandler.LoginHandler)
-	// router.GET("/logout", authHandler.LogoutHandler())
+	usecase := initUsecase(ecommerceDB)
+	router := newRoutes(usecase)
 
 	router.Run(":8080")
 }
